@@ -1,0 +1,8 @@
+[
+    {"db_name": "db1", "owner_email": "joaco@meli.com", "classification": "high"},
+    {"db_name": "db2", "owner_email": "erika@meli.com", "classification": "medium"},
+    {"db_name": "db3", "owner_email": "dennis@meli.com", "classification": "low"},
+    {"db_name": "db4", "owner_email": "anthony@meli.com", "classification": "high"},
+    {"db_name": "db5", "owner_email": "danicorrea@meli.com", "classification": "medium"}
+]
+

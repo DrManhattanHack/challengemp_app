@@ -1,0 +1,5 @@
+pandas
+sqlalchemy
+tqdm
+colorama
+python-dotenv
