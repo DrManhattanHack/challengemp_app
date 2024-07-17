@@ -4,11 +4,53 @@ Esta es una aplicación diseñada para automatizar la revalidación de la clasif
 
 ## Características
 
-Disponemos de un archivo de tipo JSON con la información de la clasificación de las bases de datos y un archivo CSV con información de usuarios y su manager. El archivo JSON puede tener campos incompletos. En dicho caso, será necesario encontrar alguna solución para procesarlo. El archivo CSV tiene la siguiente forma:
+La aplicación utiliza dos archivos de entrada: un archivo JSON y un archivo CSV.
 
-```csv
+### Archivo JSON
+
+El archivo `db_classification.json` contiene información sobre la clasificación de las bases de datos. Cada entrada en este archivo tiene la siguiente estructura:
+
+```json
+[
+    {
+        "db_name": "nombre_de_la_base_de_datos",
+        "owner_email": "correo_del_propietario",
+        "classification": "clasificación"
+    }
+]
+```
+•	db_name: Nombre de la base de datos.
+•	owner_email: Correo electrónico del propietario de la base de datos.
+•	classification: Clasificación de la base de datos (high, medium, low).
+
+### Archivo CSV
+
+El archivo user_info.csv contiene información sobre los usuarios y sus managers. Tiene la siguiente estructura:
+
+```json
 row_id, user_id, user_state, user_manager
 ```
+
+•	row_id: Identificador de la fila.
+•	user_id: Correo electrónico del usuario (debe coincidir con el owner_email en el archivo JSON).
+•	user_state: Estado del usuario (active).
+•	user_manager: Correo electrónico del manager del usuario.
+
+Funcionamiento de la Aplicación
+
+1. Lectura y Validación de Datos:
+La aplicación lee el archivo JSON y el archivo CSV.
+Completa cualquier campo faltante en el archivo JSON con valores predeterminados:
+- db_name: "unknown_db"
+- owner_email: "unknown@meli.com"
+- classification: "unknown"
+
+2. Almacenamiento en Base de Datos:
+- Los datos se almacenan en una base de datos SQLite, normalizada en varias tablas (databases, owners, managers, database_owners_managers).
+
+3. Envío de Correos:
+- Para cada entrada en la base de datos con clasificación high, se envía un correo al manager del propietario de la base de datos solicitando su confirmación sobre la clasificación.
+- El correo se envía utilizando un servidor SMTP (configurado para Gmail).
 
 
 ## Requisitos
@@ -80,9 +122,9 @@ docker run -it --rm challenge_app
 ### Problemas y Soluciones
 
 	1.	Problema: Datos incompletos en JSON
-	•	Solución: Se añaden valores predeterminados para los campos faltantes (db_name, owner_email, classification).
+		Solución: Se añaden valores predeterminados para los campos faltantes (db_name, owner_email, classification).
 	2.	Problema: Envío de correos fallidos debido a credenciales incorrectas
-	•	Solución: Se verifica la autenticación del correo al inicio del programa y se detiene la ejecución si las credenciales son incorrectas.
+		Solución: Se verifica la autenticación del correo al inicio del programa y se detiene la ejecución si las credenciales son incorrectas.
 	3.	Problema: Necesidad de normalizar la base de datos
-	•	Solución: Se ha normalizado la base de datos dividiéndola en varias tablas (databases, owners, managers, database_owners_managers) para evitar redundancias.
+		Solución: Se ha normalizado la base de datos dividiéndola en varias tablas (databases, owners, managers, database_owners_managers) para evitar redundancias.
 
