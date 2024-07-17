@@ -1,6 +1,19 @@
 # Challenge App
 
-Esta es una aplicación de ejemplo que gestiona la clasificación de bases de datos y envía correos electrónicos basados en la clasificación.
+Esta es una aplicación diseñada para automatizar la revalidación de la clasificación de bases de datos de Mercado Libre. El objetivo es reducir la necesidad de reuniones presenciales para validar la clasificación, enviando correos electrónicos a los managers de las bases de datos más críticas para pedir su confirmación.
+
+## Contexto
+
+El equipo de Seguridad Informática de Mercado Libre se encarga de hacer las reválidas anuales del proceso de clasificación de la información. Sabemos por el feedback del año pasado, que generar reuniones presenciales para validar esto, es un poco molesto para el usuario, más aún cuando las bases no son muy críticas. Por eso y dado que estamos cerca de la fecha de reválida de bases de datos, este año queremos hacerlo de manera automática. Pensamos pedirle a los managers de las bases más críticas que nos den el OK por mail.
+
+## Características
+
+Disponemos de un archivo de tipo JSON con la información de la clasificación de las bases de datos y un archivo CSV con información de usuarios y su manager. El archivo JSON puede tener campos incompletos. En dicho caso, será necesario encontrar alguna solución para procesarlo. El archivo CSV tiene la siguiente forma:
+
+```csv
+row_id, user_id, user_state, user_manager
+```
+
 
 ## Requisitos
 
@@ -16,7 +29,13 @@ Esta es una aplicación de ejemplo que gestiona la clasificación de bases de da
     cd challengemp_app
     ```
 
-2. Instala las dependencias:
+2. Crea un entorno virtual:
+
+   ```sh
+    python -m venv venv
+    ```
+
+4. Instala las dependencias:
 
     ```sh
     pip install -r requirements.txt
@@ -49,3 +68,25 @@ La aplicación también puede ejecutarse dentro de un contenedor Docker. Sigue l
 
 ```sh
 docker build -t challenge_app .
+```
+
+### Ejecutar el contenedor Docker
+
+```sh
+docker run -it --rm challenge_app
+```
+
+### Supuestos
+
+	•	Los datos en el archivo JSON pueden estar incompletos. Se han añadido soluciones para completar datos faltantes con valores predeterminados.
+	•	Se asume que los correos electrónicos de los managers están correctos y que el servidor de correo utilizado es Gmail.
+
+### Problemas y Soluciones
+
+	1.	Problema: Datos incompletos en JSON
+	•	Solución: Se añaden valores predeterminados para los campos faltantes (db_name, owner_email, classification).
+	2.	Problema: Envío de correos fallidos debido a credenciales incorrectas
+	•	Solución: Se verifica la autenticación del correo al inicio del programa y se detiene la ejecución si las credenciales son incorrectas.
+	3.	Problema: Necesidad de normalizar la base de datos
+	•	Solución: Se ha normalizado la base de datos dividiéndola en varias tablas (databases, owners, managers, database_owners_managers) para evitar redundancias.
+
