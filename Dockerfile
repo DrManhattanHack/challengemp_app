@@ -4,6 +4,9 @@ FROM python:3.9-slim
 # Establecer el directorio de trabajo en /app
 WORKDIR /app
 
+# Configurar DNS
+RUN echo "nameserver 8.8.8.8" > /etc/resolv.conf
+
 # Copiar los archivos requeridos al contenedor de Docker
 COPY requirements.txt requirements.txt
 COPY . .
