@@ -2,10 +2,6 @@
 
 Esta es una aplicación diseñada para automatizar la revalidación de la clasificación de bases de datos de Mercado Libre. El objetivo es reducir la necesidad de reuniones presenciales para validar la clasificación, enviando correos electrónicos a los managers de las bases de datos más críticas para pedir su confirmación.
 
-## Contexto
-
-El equipo de Seguridad Informática de Mercado Libre se encarga de hacer las reválidas anuales del proceso de clasificación de la información. Sabemos por el feedback del año pasado, que generar reuniones presenciales para validar esto, es un poco molesto para el usuario, más aún cuando las bases no son muy críticas. Por eso y dado que estamos cerca de la fecha de reválida de bases de datos, este año queremos hacerlo de manera automática. Pensamos pedirle a los managers de las bases más críticas que nos den el OK por mail.
-
 ## Características
 
 Disponemos de un archivo de tipo JSON con la información de la clasificación de las bases de datos y un archivo CSV con información de usuarios y su manager. El archivo JSON puede tener campos incompletos. En dicho caso, será necesario encontrar alguna solución para procesarlo. El archivo CSV tiene la siguiente forma:
