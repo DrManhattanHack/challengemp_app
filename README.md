@@ -20,20 +20,25 @@ El archivo `db_classification.json` contiene información sobre la clasificació
 ]
 ```
 •	db_name: Nombre de la base de datos.
+
 •	owner_email: Correo electrónico del propietario de la base de datos.
+
 •	classification: Clasificación de la base de datos (high, medium, low).
 
 ### Archivo CSV
 
 El archivo user_info.csv contiene información sobre los usuarios y sus managers. Tiene la siguiente estructura:
 
-```json
+```csv
 row_id, user_id, user_state, user_manager
 ```
 
 •	row_id: Identificador de la fila.
+
 •	user_id: Correo electrónico del usuario (debe coincidir con el owner_email en el archivo JSON).
+
 •	user_state: Estado del usuario (active).
+
 •	user_manager: Correo electrónico del manager del usuario.
 
 Funcionamiento de la Aplicación
